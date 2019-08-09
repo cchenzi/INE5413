@@ -60,7 +60,6 @@ class graph:
                 degree += 1
         return degree
         '''
-        return self.degree[vertice]
 
     def has_edge(self, edge):
         for x in self.edges:
