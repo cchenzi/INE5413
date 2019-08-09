@@ -1,4 +1,11 @@
 class graph:
+    '''
+    Base class for undirected and weighted graph G(V, E, w), where:
+        V represents a set of vertices;
+        E represents a list of edges;
+        w represents a list of weights.
+    '''
+ 
     def __init__(self, identification):
         self.indetification = identification
         self.edges = []
