@@ -6,7 +6,7 @@
 (✓) qtdArestas
 (✓) grau
 (✓) rotulo
-(x) vizinhos
+(!!) vizinhos -> tá bem ruim a função, cabe revisar ela
 (✓) haAresta
 (✓) peso
 (✓) ler(arquivo)
