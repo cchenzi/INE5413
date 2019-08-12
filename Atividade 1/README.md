@@ -21,5 +21,5 @@ definir o algoritmo pra cada um
 ```
 # 6:
 ```
-vou criar um doc no overleaf, pode ser?
+https://www.overleaf.com/8762575287yywfycnwmrmz
 ```
