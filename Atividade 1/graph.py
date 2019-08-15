@@ -10,8 +10,8 @@ class graph:
         self.indetification = identification
         self.edges = []
         self.vertices = set()
-        self.vertices_names = {}  # o que vcs acham disso?
-        self.weights = []
+        self.vertices_names = {}
+        self.weights = {}
         self.degrees = {}
 
     def add_vertice(self, vertice, name):
@@ -43,7 +43,8 @@ class graph:
             print("Can't add ", edge, "to edges!")
             return 0
         self.edges.append(edge)
-        self.weights.append(weight)
+        
+        self.weights[edge] = weight
 
         for vertice in edge:
             self.degrees[vertice] += 1
@@ -55,18 +56,10 @@ class graph:
         return len(self.edges)
 
     def get_degree(self, vertice):
-        # manter um dict para os degrees, aumentando em cada acesso?
         if not self.validate_vertice(vertice):
             print(vertice, "doesn't exist!")
             return 0
         return self.degrees[vertice]
-        '''
-        degree = 0
-        for edge in self.edges:
-            if vertice in edge:
-                degree += 1
-        return degree
-        '''
 
     def has_edge(self, edge):
         for x in self.edges:
@@ -75,13 +68,11 @@ class graph:
         return False
 
     def get_weight(self, edge):
-        count = 0
-        for x in self.edges:
-            if x == edge:
-                return self.weights[count]
-            count += 1
+        if edge in self.edges:
+            return self.weights[edge]
         return float('inf')
 
+    #Pensar em Algo nisso
     def get_neighbours(self, vertice):
         aux = set(vertice)
         neighbours = []
@@ -116,4 +107,5 @@ class graph:
                 self.add_vertice(w1, w2)
             if edges_step:
                 w1 = r2.findall(string)
-                self.add_edges(set((w1[0], w1[1])), w1[2])
+                self.add_edges((w1[0], w1[1]), w1[2])
+                self.add_edges((w1[1], w1[0]), w1[2])
