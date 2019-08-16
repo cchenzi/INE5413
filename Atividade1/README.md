@@ -6,18 +6,26 @@
 (✓) qtdArestas
 (✓) grau
 (✓) rotulo
-(!) vizinhos -> tá bem ruim a função, cabe revisar ela
+(✓) vizinhos 
 (✓) haAresta
 (✓) peso
 (✓) ler(arquivo)
 ```
 ## 2: 
 ```
-tudo
+feito
 ```
-## 3, 4 e 5:
+## 3
 ```
-definir o algoritmo pra cada um
+alguem
+```
+## 4
+```
+chico
+```
+## 5
+```
+alguem
 ```
 # 6:
 ```
