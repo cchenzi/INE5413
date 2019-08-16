@@ -1,3 +1,6 @@
+from graphviz import Graph as graph_draw
+
+
 class Graph:
     '''
     Base class for undirected and weighted graph G(V, E, w), where:
@@ -98,6 +101,12 @@ class Graph:
                     Av[idx_v] = u
                     Q.append(v)
         return Dv, Av
+
+    def draw(self, filename):
+        gr = graph_draw(comment='Graph', format='png')
+        for x in self.edges:
+            gr.edge(self.vertices_names[x[0]], self.vertices_names[x[1]], label=self.weights[x])
+        gr.view(filename=filename, cleanup='True')
 
     def read_file(self, file_name):
         import re
