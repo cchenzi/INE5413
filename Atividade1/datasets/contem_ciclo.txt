@@ -1,5 +1,5 @@
 *vertices 6
-1 "Itajai S"
+1 "Itajai"
 2 "Camboriu"
 3 "Brusque"
 4 "Nova Trento"
