@@ -58,16 +58,22 @@ def menu(graph):
                 filename = input()
                 graph.draw_ancestral_tree(ancestral_dict, filename)
                 print('xD')
+            input('Press enter to continue...')
         if sel == 2:
             print('xD')
+            input('Press enter to continue...')
         if sel == 3:
             print('xD')
+            input('Press enter to continue...')
         if sel == 4:
             print('xD')
+            input('Press enter to continue...')
         if sel == 5:
             print('Vertices names: ', graph.vertices_names)
+            input('Press enter to continue...')
         if sel == 6:
             print('Edges: ', graph.edges)
+            input('Press enter to continue...')
         if sel == 7:
             if graph.num_edges() > 50:
                 print('Graph too long to draw!')
