@@ -1,5 +1,6 @@
 from graph import Graph
 import sys
+import os
 
 if len(sys.argv) < 2:
     print('Please run as:')
@@ -8,8 +9,6 @@ if len(sys.argv) < 2:
 
 ID = sys.argv[1]
 DATASET = sys.argv[2]
-a = Graph(ID)
-a.read_file(DATASET)
 
 
 def print_bfs_result(distance_dict):
@@ -23,16 +22,60 @@ def print_bfs_result(distance_dict):
     for k in sorted(list(print_aux)):
         print('{}: {}'.format(k, ','.join(print_aux[k])))
 
-print(a.vertices)
-print(a.neighbours)
 
-ex_bfs = a.breadth_first_search('1')
-# print(ex_bfs)
-distance_dict = dict(zip(a.vertices, ex_bfs[0]))
+def menu(graph):
+    while True:
+        os.system('clear')
+        print('Graph:', graph.identification)
+        print('Please select: ')
+        print('1: Breadth First Search')
+        print('2: Eulerian Cicle')
+        print('3: Dijkstra Algorithm')
+        print('4: Floyd-Warshall Algorithm')
+        print('5: Print Vertices')
+        print('6: Print Edges')
+        print('7: Draw Graph')
+        print('0: Exit')
+        sel = int(input())
 
-ancestral_dict = dict(zip(a.vertices, ex_bfs[1]))
-print('Distances: ', distance_dict)
-print('Ancestrals: ', ancestral_dict)
-max_distance = max(distance_dict.values())
-print_bfs_result(distance_dict)
-a.draw('teste')
+        if sel == 0:
+            print('Goodbye')
+            break
+        if sel == 1:
+            print('Please select a vertice: ', graph.vertices)
+            v = input()
+            bfs = graph.breadth_first_search(v)
+            distance_dict = dict(zip(graph.vertices, bfs[0]))
+            ancestral_dict = dict(zip(graph.vertices, bfs[1]))
+            print('Distances: ', distance_dict)
+            print('Ancestrals: ', ancestral_dict)
+            # max_distance = max(distance_dict.values())
+            print_bfs_result(distance_dict)
+            print('Print ancestral tree? (y/n)')
+            op = input()
+            if op == 'y':
+                print('Insert filename: ')
+                filename = input()
+                graph.draw_ancestral_tree(ancestral_dict, filename)
+                print('xD')
+        if sel == 2:
+            print('xD')
+        if sel == 3:
+            print('xD')
+        if sel == 4:
+            print('xD')
+        if sel == 5:
+            print('Vertices names: ', graph.vertices_names)
+        if sel == 6:
+            print('Edges: ', graph.edges)
+        if sel == 7:
+            if graph.num_edges() > 50:
+                print('Graph too long to draw!')
+            else:
+                print('Insert filename: ')
+                filename = input()
+                graph.draw(filename)
+
+graph = Graph(ID)
+graph.read_file(DATASET)
+menu(graph)

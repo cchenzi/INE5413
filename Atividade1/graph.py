@@ -10,7 +10,7 @@ class Graph:
     '''
  
     def __init__(self, identification):
-        self.idetification = identification
+        self.identification = identification
         self.edges = []
         self.vertices = set()
         self.vertices_names = {}
@@ -106,6 +106,13 @@ class Graph:
         gr = graph_draw(comment='Graph', format='png', strict=True)
         for x in self.edges:
             gr.edge(self.vertices_names[x[0]], self.vertices_names[x[1]], label=self.weights[x])
+        gr.view(filename=filename, cleanup='True')
+
+    def draw_ancestral_tree(self, ancestral, filename):
+        aux = list(zip(list(ancestral), ancestral.values()))
+        gr = graph_draw(comment='Graph', format='png', strict=True)
+        for x in aux:
+            gr.edge(str(x[0]), str(x[1]))
         gr.view(filename=filename, cleanup='True')
 
     def read_file(self, file_name):
