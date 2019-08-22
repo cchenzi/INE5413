@@ -10,14 +10,15 @@
 (✓) haAresta
 (✓) peso
 (✓) ler(arquivo)
+( ) verificar complex e return serlf.edges has edges
 ```
 ## 2: 
 ```
 feito
 ```
 ## 3
-```
-alguem
+
+hobs
 ```
 ## 4
 ```
@@ -25,9 +26,10 @@ chico
 ```
 ## 5
 ```
-alguem
+cross
 ```
 # 6:
 ```
 https://www.overleaf.com/8762575287yywfycnwmrmz
++hobs -cross
 ```
