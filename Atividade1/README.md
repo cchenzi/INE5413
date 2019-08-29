@@ -11,7 +11,7 @@
 (✓) peso
 (✓) ler(arquivo)
 ( ) verificar complex e return serlf.edges has edges
-( ) trocar vertice pra list e não set zzz
+( ) trocar vertice pra list e não set zzz (tem que checar, mas talvez nao precise)
 ```
 ## 2: 
 ```
