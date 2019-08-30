@@ -8,7 +8,6 @@ class Graph:
         E represents a list of edges;
         w represents a list of weights.
     '''
- 
     def __init__(self, identification):
         self.identification = identification
         self.edges = []
@@ -48,7 +47,7 @@ class Graph:
             print("Can't add ", edge, "to edges!")
             return 0
         self.edges.append(edge)
-        self.weights[edge] = weight
+        self.weights[edge] = float(weight)
         for idx, vertice in enumerate(edge):
             aux = edge[(idx + 1) % 2]
             self.neighbours[vertice].add(aux)
@@ -67,10 +66,7 @@ class Graph:
         return self.degrees[vertice]
 
     def has_edge(self, edge):
-        for x in self.edges:
-            if x == edge:
-                return True
-        return False
+        return edge in self.edges
 
     def get_weight(self, edge):
         if edge in self.edges:
@@ -82,11 +78,11 @@ class Graph:
 
     def breadth_first_search(self, vertice):
         vertices_aux = list(self.vertices)
-        Cv = [False for x in vertices_aux]
-        Dv = [float('inf') for x in vertices_aux]
-        Av = [0 for x in vertices_aux]
-        Cv[vertices_aux.index(vertice)] = True
-        Dv[vertices_aux.index(vertice)] = 0
+        C = [False for x in vertices_aux]
+        D = [float('inf') for x in vertices_aux]
+        A = [None for x in vertices_aux]
+        C[vertices_aux.index(vertice)] = True
+        D[vertices_aux.index(vertice)] = 0
         Q = []
         Q.append(vertice)
         while Q != []:
@@ -95,12 +91,36 @@ class Graph:
             idx_u = vertices_aux.index(u)
             for v in neigh:
                 idx_v = vertices_aux.index(v)
-                if not Cv[idx_v]:
-                    Cv[idx_v] = True
-                    Dv[idx_v] = Dv[idx_u] + 1
-                    Av[idx_v] = u
+                if not C[idx_v]:
+                    C[idx_v] = True
+                    D[idx_v] = D[idx_u] + 1
+                    A[idx_v] = u
                     Q.append(v)
-        return Dv, Av
+        return D, A
+
+    def bellman_ford(self, vertice):
+        vertices_aux = list(self.vertices)
+        D = [float('inf') for x in vertices_aux]
+        A = [None for x in vertices_aux]
+        D[vertices_aux.index(vertice)] = 0
+
+        for i in range(1, len(vertices_aux) - 1):
+            for edge in self.edges:
+                idx_u = vertices_aux.index(edge[0])
+                idx_v = vertices_aux.index(edge[1])
+                weight = self.weights[edge]
+                if D[idx_v] > D[idx_u] + weight:
+                    D[idx_v] = D[idx_u] + weight
+                    A[idx_v] = edge[0]
+
+        for edge in self.edges:
+            idx_u = vertices_aux.index(edge[0])
+            idx_v = vertices_aux.index(edge[1])
+            weight = self.weights[edge]
+            if D[idx_v] > D[idx_u] + weight:
+                return False, [], []
+
+        return True, D, A
 
     def draw(self, filename):
         gr = graph_draw(comment='Graph', format='png', strict=True)
