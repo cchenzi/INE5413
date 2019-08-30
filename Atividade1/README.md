@@ -10,8 +10,7 @@
 (✓) haAresta
 (✓) peso
 (✓) ler(arquivo)
-( ) verificar complex e return serlf.edges has edges
-( ) trocar vertice pra list e não set zzz (tem que checar, mas talvez nao precise)
+( ) trocar vertice de set para list? (conversar sobre isso)
 ```
 ## 2: 
 ```
@@ -23,7 +22,7 @@ hobs
 ```
 ## 4:
 ```
-chico
+feito
 ```
 ## 5:
 ```
