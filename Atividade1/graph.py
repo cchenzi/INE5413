@@ -125,7 +125,7 @@ class Graph:
     def draw(self, filename):
         gr = graph_draw(comment='Graph', format='png', strict=True)
         for x in self.edges:
-            gr.edge(self.vertices_names[x[0]], self.vertices_names[x[1]], label=self.weights[x])
+            gr.edge(self.vertices_names[x[0]], self.vertices_names[x[1]], label=str(self.weights[x]))
         gr.view(filename=filename, cleanup='True')
 
     def draw_ancestral_tree(self, ancestral, filename):

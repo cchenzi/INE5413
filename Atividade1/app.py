@@ -57,6 +57,7 @@ def menu(graph):
         if sel == 9:
             if graph.num_edges() > 50:
                 print('Graph too long to draw!')
+                input('Press enter to continue...')
             else:
                 print('Insert filename: ')
                 filename = input()
