@@ -122,6 +122,21 @@ class Graph:
 
         return True, D, A
 
+
+    def floyd_warshall(self):
+        vertices_aux = list(self.vertices)
+
+        # ta meio perigoso, precisava garantir os indices nas colunas e linhas
+        # o que acontece se o grafo for tipo (1, 4, 6, 8) ??
+        # acho que isso aqui precisava ser um dict de dicts
+        D = {x: {y: float('inf') for y in vertices_aux} for x in vertices_aux}
+
+        # ai inicializa
+
+        # e finalmente roda o algoritmo
+
+        return D
+
     def draw(self, filename):
         gr = graph_draw(comment='Graph', format='png', strict=True)
         for x in self.edges:

@@ -3,13 +3,22 @@ import view_aux as v_x
 import sys
 import os
 
-if len(sys.argv) < 2:
-    print('Please run as:')
-    print('\tapp.py', 'IDENTIFICATION', 'DATASET')
-    exit()
+def main():
+    """Gets arguments from user, builds up the graph and calls menu"""
 
-ID = sys.argv[1]
-DATASET = sys.argv[2]
+    if len(sys.argv) < 2:
+        print('Please run as:')
+        print('\tapp.py', 'IDENTIFICATION', 'DATASET')
+        print()
+        print('Example:')
+        print('\tapp.py', '1', 'datasets/contem_ciclo.txt')
+        exit()
+
+    ID = sys.argv[1]
+    DATASET = sys.argv[2]
+    graph = Graph(ID)
+    graph.read_file(DATASET)
+    menu(graph)
 
 
 def menu(graph):
@@ -40,8 +49,7 @@ def menu(graph):
         if sel == 3:
             v_x.sel_bfa(graph)
         if sel == 4:
-            print('xD')
-            input('Press enter to continue...')
+            v_x.sel_floyd_warshall(graph)
         if sel == 5:
             print('Vertices names: ', graph.vertices_names)
             print('Size: ', len(graph.vertices_names))
@@ -62,6 +70,6 @@ def menu(graph):
                 filename = input()
                 graph.draw(filename)
 
-graph = Graph(ID)
-graph.read_file(DATASET)
-menu(graph)
+
+if __name__ == "__main__":
+    main()

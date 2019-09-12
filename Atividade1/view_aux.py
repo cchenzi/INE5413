@@ -35,6 +35,25 @@ def print_bfa_result(v, ancestral_dict, distance_dict):
                                     distance_dict[k]))
 
 
+def print_floyd_warshall(distance_dict):
+    # print_aux = {}
+    # for k, x in distance_dict.items():
+    #     if x not in print_aux:
+    #         print_aux[x] = []
+    #         print_aux[x].append(k)
+    #     else:
+    #         print_aux[x].append(k)
+
+    # ok isso eh um cadinho complexo
+    # 1- outer sorted, ok
+    # 2- inner key sorted, get value
+
+    print('Floyd Warshall:')
+    for outer_k in sorted(list(distance_dict)):
+        print_aux = [str(v) for inner_k, v in sorted(distance_dict[outer_k].items())]
+        print('{}: {}'.format(outer_k, ','.join(print_aux)))
+
+
 def sel_bfs(graph):
     print('Please select a vertice: ', graph.vertices)
     v = input()
@@ -68,6 +87,25 @@ def sel_bfa(graph):
         print('Distances: ', distance_dict)
         print('Ancestrals: ', ancestral_dict)
         print_bfa_result(v, ancestral_dict, distance_dict)
+    input('Press enter to continue...')
+
+
+def sel_floyd_warshall(graph):
+    distances = graph.floyd_warshall()
+    print_floyd_warshall(distances)
+
+    # distance_dict = dict(zip(graph.vertices, distances))
+
+    # print_bfs_result(distance_dict)
+
+    # print(sorted(list(graph.vertices)))
+
+    # print(graph.weights)
+
+    # print()
+
+    # print(graph.vertices)
+
     input('Press enter to continue...')
 
 
