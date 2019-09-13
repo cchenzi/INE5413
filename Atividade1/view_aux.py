@@ -6,6 +6,10 @@ def print_bfs_result(distance_dict):
             print_aux[x].append(k)
         else:
             print_aux[x].append(k)
+
+    # print(print_aux)
+    # for k in range(len(print_aux)):
+    #     print('{}: {}'.format(k, ','.join(print_aux[k])))
     for k in sorted(list(print_aux)):
         print('{}: {}'.format(k, ','.join(print_aux[k])))
 
@@ -28,9 +32,14 @@ def print_bfa_result(v, ancestral_dict, distance_dict):
                     break
             print_aux[k] = path[::-1]
             print_aux[k].append(k)
-    print(print_aux)
-    print(distance_dict)
-    for k in sorted(list(print_aux)):
+    # print(print_aux)
+    # print(distance_dict)
+    # for x in range(len(print_aux)):
+    #     k = str(x+1)
+    #     print('{}: {}; d={}'.format(k, ','.join(print_aux[k]),
+    #                                 distance_dict[k]))
+    for k in sorted(map(int, print_aux)):
+        k = str(k)
         print('{}: {}; d={}'.format(k, ','.join(print_aux[k]),
                                     distance_dict[k]))
 
@@ -60,8 +69,8 @@ def sel_bfs(graph):
     bfs = graph.breadth_first_search(v)
     distance_dict = dict(zip(graph.vertices, bfs[0]))
     ancestral_dict = dict(zip(graph.vertices, bfs[1]))
-    print('Distances: ', distance_dict)
-    print('Ancestrals: ', ancestral_dict)
+    # print('Distances: ', distance_dict)
+    # print('Ancestrals: ', ancestral_dict)
     # max_distance = max(distance_dict.values())
     print_bfs_result(distance_dict)
     print('Print ancestral tree? (y/n)')
