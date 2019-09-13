@@ -126,16 +126,24 @@ class Graph:
     def floyd_warshall(self):
         vertices_aux = list(self.vertices)
 
-        # ta meio perigoso, precisava garantir os indices nas colunas e linhas
-        # o que acontece se o grafo for tipo (1, 4, 6, 8) ??
-        # acho que isso aqui precisava ser um dict de dicts
-        D = {x: {y: float('inf') for y in vertices_aux} for x in vertices_aux}
+        # dicts to get rid of ordenation problems
+        distance = {x: {y: float('inf') for y in vertices_aux} for x in vertices_aux}
 
-        # ai inicializa
+        # inicializing matrix
+        for v in vertices_aux:
+            distance[v][v] = 0.0
+            for n in self.get_neighbours(v):
+                # ((v,n)) creates edge manually
+                distance[v][n] = self.get_weight((v, n))
 
-        # e finalmente roda o algoritmo
+        # run algorithm
+        for p in vertices_aux: 
+            for v in vertices_aux:
+                for w in vertices_aux:
+                    if distance[v][w] > distance[v][p] + distance[p][w]:
+                        distance[v][w] = distance[v][p] + distance[p][w]
 
-        return D
+        return distance
 
     def draw(self, filename):
         gr = graph_draw(comment='Graph', format='png', strict=True)

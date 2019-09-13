@@ -51,7 +51,7 @@ def print_floyd_warshall(distance_dict):
     print('Floyd Warshall:')
     for outer_k in sorted(list(distance_dict)):
         print_aux = [str(v) for inner_k, v in sorted(distance_dict[outer_k].items())]
-        print('{}: {}'.format(outer_k, ','.join(print_aux)))
+        print('{}: {}'.format(outer_k, ', '.join(print_aux)))
 
 
 def sel_bfs(graph):
