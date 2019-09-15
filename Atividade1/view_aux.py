@@ -142,3 +142,15 @@ def sel_verify_edge(graph):
     else:
         print('Edge is not in graph!')
     input('Press enter to continue...')
+
+def sel_hierholzer(graph):
+    (r,Ciclo) = graph.hierholzer()
+    if r :
+        print(1)
+        print(Ciclo)
+    else:
+        print(0)
+
+    #input('Press enter to continue...')
+
+

@@ -1,4 +1,5 @@
 from graphviz import Graph as graph_draw
+from random import randrange
 
 
 class Graph:
@@ -97,6 +98,49 @@ class Graph:
                     A[idx_v] = u
                     Q.append(v)
         return D, A
+
+    def searchEulirianSubcicle(self, v, C):
+        Ciclo = [v]
+        t = v
+        while True:
+            ver_nei = True
+            for u in self.get_neighbours(v):
+                index = self.edges.index((u,v))
+                if C[index] == False:
+                    ver_nei = False
+                    C[index] = True
+                    C[self.edges.index((v,u))] = True
+                    v = u
+                    Ciclo.append(v)
+                    break
+                    
+            if ver_nei:
+                return (False,None)
+            if (v == t):
+                break
+        for x in Ciclo:
+            for w in self.get_neighbours(x):
+                if C[self.edges.index((x,w))] == False:
+                    (r,Aux_ciclo) = self.searchEulirianSubcicle(x,C)
+                    if r == False:
+                        return (False, None)
+                    else:
+                        aux = Ciclo.index(x)+1
+                        Ciclo = Ciclo[:Ciclo.index(x)] + Aux_ciclo + Ciclo[aux:]
+        return (True, Ciclo)
+
+    def hierholzer(self):
+        vertices_aux = list(self.vertices)
+        C = [False for e in self.edges]
+        v = vertices_aux[randrange(len(vertices_aux))]
+        (r, Ciclo) = self.searchEulirianSubcicle(v, C)
+        if r == False:
+            return (False, None)
+        else:
+            for e in C:
+                if not(e):
+                    return(False,None)
+            return (True, Ciclo)
 
     def bellman_ford(self, vertice):
         vertices_aux = list(self.vertices)

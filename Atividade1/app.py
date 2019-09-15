@@ -44,7 +44,7 @@ def menu(graph):
         if sel == 1:
             v_x.sel_bfs(graph)
         if sel == 2:
-            print('xD')
+            v_x.sel_hierholzer(graph)
             input('Press enter to continue...')
         if sel == 3:
             v_x.sel_bfa(graph)
