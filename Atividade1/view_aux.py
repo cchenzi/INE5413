@@ -89,12 +89,12 @@ def sel_bfa(graph):
     if not bfa[0]:
         print("Can't find shortest path to", v)
     else:
-        print(bfa[1])
-        print(bfa[2])
+        # print(bfa[1])
+        # print(bfa[2])
         distance_dict = dict(zip(graph.vertices, bfa[1]))
         ancestral_dict = dict(zip(graph.vertices, bfa[2]))
-        print('Distances: ', distance_dict)
-        print('Ancestrals: ', ancestral_dict)
+        # print('Distances: ', distance_dict)
+        # print('Ancestrals: ', ancestral_dict)
         print_bfa_result(v, ancestral_dict, distance_dict)
     input('Press enter to continue...')
 
