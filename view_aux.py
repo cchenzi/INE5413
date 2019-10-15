@@ -102,19 +102,6 @@ def sel_bfa(graph):
 def sel_floyd_warshall(graph):
     distances = graph.floyd_warshall()
     print_floyd_warshall(distances)
-
-    # distance_dict = dict(zip(graph.vertices, distances))
-
-    # print_bfs_result(distance_dict)
-
-    # print(sorted(list(graph.vertices)))
-
-    # print(graph.weights)
-
-    # print()
-
-    # print(graph.vertices)
-
     input('Press enter to continue...')
 
 
@@ -143,14 +130,27 @@ def sel_verify_edge(graph):
         print('Edge is not in graph!')
     input('Press enter to continue...')
 
+
 def sel_hierholzer(graph):
-    (r,Ciclo) = graph.hierholzer()
-    if r :
+    (r, Ciclo) = graph.hierholzer()
+    if r:
         print(1)
         print(Ciclo)
     else:
         print(0)
+    input('Press enter to continue...')
 
-    #input('Press enter to continue...')
+
+def sel_scc(graph):
+    print("xD")
+    input('Press enter to continue...')
 
 
+def sel_tps(graph):
+    print("xD")
+    input('Press enter to continue...')
+
+
+def sel_kruskel(graph):
+    print("xD")
+    input('Press enter to continue...')
