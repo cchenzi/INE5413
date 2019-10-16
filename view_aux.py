@@ -147,7 +147,7 @@ def sel_scc(graph):
 
 
 def sel_tps(graph):
-    print("xD")
+    print(graph.topological_sorting())
     input('Press enter to continue...')
 
 

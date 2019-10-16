@@ -20,6 +20,7 @@ class Digraph(Graph):
         self.degrees = {}
         self.indegrees = {}
         self.outdegrees = {}
+        self.outneighbours = {}
 
     def add_vertice(self, vertice, name):
         if vertice in self.vertices:
@@ -28,6 +29,7 @@ class Digraph(Graph):
         self.vertices_names[vertice] = name
         self.degrees[vertice] = 0
         self.neighbours[vertice] = set()
+        self.outneighbours[vertice] = []
         self.indegrees[vertice] = 0
         self.outdegrees[vertice] = 0
 
@@ -39,10 +41,14 @@ class Digraph(Graph):
         self.weights[edge] = float(weight)
         self.outdegrees[edge[0]] += 1
         self.indegrees[edge[1]] += 1
+        self.outneighbours[edge[0]].append(edge[1])
         for idx, vertice in enumerate(edge):
             aux = edge[(idx + 1) % 2]
             self.neighbours[vertice].add(aux)
             self.degrees[vertice] += 1
+
+    def get_outneighbours(self, vertice):
+        return self.outneighbours[vertice]
 
     def get_degree(self, vertice):
         if not self.validate_vertice(vertice):
@@ -75,10 +81,51 @@ class Digraph(Graph):
                     label=str(self.weights[x]))
         gr.view(filename=filename, cleanup='True')
 
-    def strongly_connected(self):
-        pass
+    def dfs_visit(self, vertice, C, T, A, F, time):
+        vertices_aux = list(self.vertices)
+        C[vertices_aux.index(vertice)] = True
+        time += 1
+        T[vertices_aux.index(vertice)] = time
+        for u in self.get_outneighbours(vertice):
+            idx_u = vertices_aux.index(u)
+            if not C[idx_u]:
+                A[idx_u] = vertice
+                (C, T, A, F, time) = self.dfs_visit(u, C, T, A, F, time)
+        time += 1
+        F[vertices_aux.index(vertice)] = time
+        return (C, T, A, F, time)
+
+    def dfs_visit_ot(self, vertice, C, T, F, time, S, A):
+        vertices_aux = list(self.vertices)
+        C[vertices_aux.index(vertice)] = True
+        time += 1
+        T[vertices_aux.index(vertice)] = time
+        for u in self.get_outneighbours(vertice):
+            idx_u = vertices_aux.index(u)
+            if not C[idx_u]:
+                (C, T, A, F, time) = self.dfs_visit(u, C, T, A, F, time)
+        time += 1
+        F[vertices_aux.index(vertice)] = time
+        S.append(vertice)
+        print(S)
+        return (C, T, F, time, S, A)
 
     def topological_sorting(self):
+        vertices_aux = list(self.vertices)
+        C = [False for x in vertices_aux]  # visited
+        T = [float('inf') for x in vertices_aux]  # visit_time
+        F = [float('inf') for x in vertices_aux]  # finish_time
+        A = [None for x in vertices_aux]  # Ancestral
+        time = 0
+        S = []  #
+        for u in vertices_aux:
+            idx_u = vertices_aux.index(u)
+            if not C[idx_u]:
+                (C, T, F, time, S, A) = self.dfs_visit_ot(u, C, T, F,
+                                                          time, S, A)
+        return S
+
+    def strongly_connected(self):
         pass
 
     # pode ser o prim tb
