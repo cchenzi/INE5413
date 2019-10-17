@@ -147,7 +147,10 @@ def sel_scc(graph):
 
 
 def sel_tps(graph):
-    print(graph.topological_sorting())
+    S = graph.topological_sorting()
+    aux_s = [graph.vertices_names[x] for x in S]
+    print('{}'.format('->'.join(aux_s)))
+
     input('Press enter to continue...')
 
 

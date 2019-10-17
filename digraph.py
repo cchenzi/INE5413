@@ -81,20 +81,6 @@ class Digraph(Graph):
                     label=str(self.weights[x]))
         gr.view(filename=filename, cleanup='True')
 
-    def dfs_visit(self, vertice, C, T, A, F, time):
-        vertices_aux = list(self.vertices)
-        C[vertices_aux.index(vertice)] = True
-        time += 1
-        T[vertices_aux.index(vertice)] = time
-        for u in self.get_outneighbours(vertice):
-            idx_u = vertices_aux.index(u)
-            if not C[idx_u]:
-                A[idx_u] = vertice
-                (C, T, A, F, time) = self.dfs_visit(u, C, T, A, F, time)
-        time += 1
-        F[vertices_aux.index(vertice)] = time
-        return (C, T, A, F, time)
-
     def dfs_visit_ot(self, vertice, C, T, F, time, S, A):
         vertices_aux = list(self.vertices)
         C[vertices_aux.index(vertice)] = True
@@ -103,11 +89,10 @@ class Digraph(Graph):
         for u in self.get_outneighbours(vertice):
             idx_u = vertices_aux.index(u)
             if not C[idx_u]:
-                (C, T, A, F, time) = self.dfs_visit(u, C, T, A, F, time)
+                (C, T, F, time, S, A) = self.dfs_visit_ot(u, C, T, F, time, S, A)
         time += 1
         F[vertices_aux.index(vertice)] = time
         S.append(vertice)
-        print(S)
         return (C, T, F, time, S, A)
 
     def topological_sorting(self):
