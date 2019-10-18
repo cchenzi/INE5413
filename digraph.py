@@ -110,10 +110,35 @@ class Digraph(Graph):
         S.reverse()
         return S
 
-    def 
+    def dfs(self):
+        vertices_aux = list(self.vertices)
+        C = [False for x in vertices_aux]  # visited
+        T = [float('inf') for x in vertices_aux]  # visit time
+        F = [float('inf') for x in vertices_aux]  # finish time
+        A = [None for x in vertices_aux]  # visited
+        time = 0
+        for v in vertices_aux:
+            if not C[vertices_aux.index(v)]:
+                self.dfs_visit(v,C,T,A,F,time)
+        return (C,T,A,F)
+
+    def dfs_visit(self, vertice, C, T, A, F, time)
+        vertices_aux = list(self.vertices)
+        index = vertices_aux.index(v)
+        C[index] = True
+        time += 1
+        T[index] =time 
+        for u in self.get_outneighbours(v):
+            index_u = vertices_aux.index(u)
+            if not C[index_u]:
+                A[index_u] = v
+                self.dfs_visit(u, C, T, A, F, time)
+        time += 1
+        F[index] = time
+
 
     def strongly_connected(self):
-        
+        pass
 
     # pode ser o prim tb
     def kruskal(self):
