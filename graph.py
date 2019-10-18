@@ -57,12 +57,12 @@ class Graph:
     def add_edges(self, edge, weight):
         pass
 
-    def read_file(self, file_name, isDigraph):
+    def read_file(self, file_name, isArcs, isDigraph):
         import re
         file = open(file_name, 'r')
         content = file.readlines()
 
-        if isDigraph:
+        if isArcs:
             break_input = "*arcs"
         else:
             break_input = "*edges"
@@ -89,4 +89,5 @@ class Graph:
             if edges_step:
                 w1 = r2.findall(string)
                 self.add_edges((w1[0], w1[1]), w1[2])
-                self.add_edges((w1[1], w1[0]), w1[2])
+                if not isDigraph:
+                    self.add_edges((w1[1], w1[0]), w1[2])

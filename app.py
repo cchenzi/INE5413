@@ -36,7 +36,7 @@ def main():
     else:
         graph = Undigraph(ID)
     print(DATASET)
-    graph.read_file(DATASET, args.arcs)
+    graph.read_file(DATASET, args.arcs, args.digraph)
     menu(graph, args.digraph)
 
 

@@ -81,33 +81,33 @@ class Digraph(Graph):
                     label=str(self.weights[x]))
         gr.view(filename=filename, cleanup='True')
 
-    def dfs_visit_ot(self, vertice, C, T, F, time, S, A):
-        vertices_aux = list(self.vertices)
+    def dfs_visit_ot(self, vertice, C, T, F, time, S, vertices_aux):
         C[vertices_aux.index(vertice)] = True
         time += 1
         T[vertices_aux.index(vertice)] = time
         for u in self.get_outneighbours(vertice):
             idx_u = vertices_aux.index(u)
             if not C[idx_u]:
-                (C, T, F, time, S, A) = self.dfs_visit_ot(u, C, T, F, time, S, A)
+                (C, T, F, time, S) = self.dfs_visit_ot(u, C, T, F, time, S,
+                                                       vertices_aux)
         time += 1
         F[vertices_aux.index(vertice)] = time
         S.append(vertice)
-        return (C, T, F, time, S, A)
+        return (C, T, F, time, S)
 
     def topological_sorting(self):
         vertices_aux = list(self.vertices)
         C = [False for x in vertices_aux]  # visited
-        T = [float('inf') for x in vertices_aux]  # visit_time
-        F = [float('inf') for x in vertices_aux]  # finish_time
-        A = [None for x in vertices_aux]  # Ancestral
+        T = [float('inf') for x in vertices_aux]  # visit time
+        F = [float('inf') for x in vertices_aux]  # finish time
         time = 0
-        S = []  #
+        S = []  # Topologically sorted vertices
         for u in vertices_aux:
             idx_u = vertices_aux.index(u)
             if not C[idx_u]:
-                (C, T, F, time, S, A) = self.dfs_visit_ot(u, C, T, F,
-                                                          time, S, A)
+                (C, T, F, time, S) = self.dfs_visit_ot(u, C, T, F,
+                                                       time, S, vertices_aux)
+        S.reverse()
         return S
 
     def strongly_connected(self):
