@@ -56,7 +56,7 @@ def menu(graph, isDigraph):
             menu_undigraph(graph)
         sel = int(input())
         if sel == 0:
-            print('Goodbye')
+            print('Goodbye :)')
             break
         if sel == 1:
             print('Vertices names: ', graph.vertices_names)
