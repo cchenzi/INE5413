@@ -22,6 +22,19 @@ class Digraph(Graph):
         self.outdegrees = {}
         self.outneighbours = {}
 
+    def copy (self,edges, vertices,
+            vertices_name, neighbours, weights, degrees, indegrees, outdegrees, outneighbours):
+        self.edges = edges
+        self.vertices = vertices
+        self.vertices_names = vertices_name
+        self.neighbours = neighbours
+        self.weights = weights
+        self.degrees = degrees
+        self.indegrees = indegrees
+        self.outdegrees = outdegrees
+        self.outneighbours = outneighbours
+
+
     def add_vertice(self, vertice, name):
         if vertice in self.vertices:
             return 0
@@ -119,26 +132,63 @@ class Digraph(Graph):
         time = 0
         for v in vertices_aux:
             if not C[vertices_aux.index(v)]:
-                self.dfs_visit(v,C,T,A,F,time)
+                (C, T, A, F, time, F_aux) = self.dfs_visit(v,C,T,A,F,time)
         return (C,T,A,F)
 
-    def dfs_visit(self, vertice, C, T, A, F, time)
+    def dfs_adaptad(self):
         vertices_aux = list(self.vertices)
-        index = vertices_aux.index(v)
+        C = [False for x in vertices_aux]  # visited
+        T = [float('inf') for x in vertices_aux]  # visit time
+        F = [float('inf') for x in vertices_aux]  # finish time
+        A = [None for x in vertices_aux]  # visited
+        time = 0
+        F_aux = list(F)
+        F_aux.sort(reverse = True)
+        for i in range(len(F)):
+            print(F)
+            print(F_aux)
+            f = F_aux[i]
+            print(f)
+            index_aux = F.index(f)
+            v = vertices_aux[index_aux]
+            if not C[index_aux]:
+                (C, T, A, F, time, F_aux) = self.dfs_visit(v,C,T,A,F,time)
+        return (C,T,A,F)
+
+
+    def dfs_visit(self, vertice, C, T, A, F, time):
+        vertices_aux = list(self.vertices)
+        index = vertices_aux.index(vertice)
         C[index] = True
         time += 1
-        T[index] =time 
-        for u in self.get_outneighbours(v):
+        T[index] =time
+        for u in self.get_outneighbours(vertice):
             index_u = vertices_aux.index(u)
             if not C[index_u]:
-                A[index_u] = v
-                self.dfs_visit(u, C, T, A, F, time)
+                A[index_u] = vertice
+                (C, T, A, F, time, F_aux) = self.dfs_visit(u, C, T, A, F, time)
         time += 1
         F[index] = time
+        F_aux = list(F)
+        F_aux.soddrt(reverse = True)
+        return (C, T, A, F, time, F_aux)
 
 
     def strongly_connected(self):
-        pass
+        (C, T, A, F) = self.dfs()
+        At = []
+        for (v1,v2) in self.edges:
+            At.append(((v2,v1),self.weights[(v1,v2)]))
+        graph_t = Digraph("T_aux")
+        graph_t.copy(At, self.vertices, self.vertices_names, self.neighbours, self.weights,
+                            self.degrees, self.indegrees, self.outdegrees, self.outneighbours)
+        (Ct, Tt, At_aux, Ft) = graph_t.dfs_adaptad()
+        print("ok")
+        print(At_aux)
+        return At_aux
+
+
+
 
     # pode ser o prim tb
     def kruskal(self):
