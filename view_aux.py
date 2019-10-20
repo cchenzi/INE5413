@@ -154,6 +154,8 @@ def sel_tps(graph):
     input('Press enter to continue...')
 
 
-def sel_kruskel(graph):
-    print("xD")
+def sel_prim(graph):
+    soma, edge_list = graph.prim()
+    print(f"Weighted Sum: {soma}")
+    print(", ".join(["{}-{}".format(*edge) for edge in edge_list]))
     input('Press enter to continue...')

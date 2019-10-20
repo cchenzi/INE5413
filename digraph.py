@@ -109,12 +109,15 @@ class Digraph(Graph):
                                                        time, S, vertices_aux)
         S.reverse()
         return S
-
-    def 
-
-    def strongly_connected(self):
         
 
     # pode ser o prim tb
-    def kruskal(self):
+    def prim(self):
+        vertices_aux = list(self.vertices)
+        print(self.vertices)
+        type(print(self.vertices))
+        print(vertices_aux)
+        type(print(self.vertices))
+        input("plmdds aperta algo")
+        C = [False for x in vertices_aux]  # visited
         pass

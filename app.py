@@ -78,7 +78,7 @@ def menu(graph, isDigraph):
                 print('Insert filename: ')
                 filename = input()
                 graph.draw(filename)
-        if (sel > 5 and sel < 10):
+        if (sel > 5 and sel <= 10):
             menu_aux(graph, isDigraph, sel)
 
 
@@ -88,8 +88,6 @@ def menu_aux(graph, isDigraph, sel):
             v_x.sel_scc(graph)
         if sel == 7:
             v_x.sel_tps(graph)
-        if sel == 8:
-            v_x.sel_kruskel(graph)
     else:
         if sel == 6:
             v_x.sel_bfs(graph)
@@ -99,12 +97,13 @@ def menu_aux(graph, isDigraph, sel):
             v_x.sel_bfa(graph)
         if sel == 9:
             v_x.sel_floyd_warshall(graph)
+        if sel == 10:
+            v_x.sel_prim(graph)
 
 
 def menu_digraph(graph):
     print('6: Strongly Connected Components')
     print('7: Topological Sorting')
-    print('8: Kruskel Algorithm')
     print('0: Exit')
 
 
@@ -113,6 +112,7 @@ def menu_undigraph(graph):
     print('7: Eulerian Cicle')
     print('8: Bellman-Ford Algorithm')
     print('9: Floyd-Warshall Algorithm')
+    print('10: Prim Algorithm')
     print('0: Exit')
 
 
