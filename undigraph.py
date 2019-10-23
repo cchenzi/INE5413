@@ -151,15 +151,17 @@ class Undigraph(Graph):
         return distance
 
     def prim(self):
-        non_visited = list(self.vertices)  # visited
-        current_node = non_visited.pop()
+        non_visited = list(self.vertices)  # keep track of nodes visited
+        current_node = non_visited.pop() # first node, any node works 
 
-        min_heap = []
+        min_heap = [] # stores the minimal weight as first
+                        # min_heap is always used with heapq methods
         
-        output_edges = []
+        output_edges = [] 
         soma = 0
 
         while(len(non_visited) != 0):
+            # input all edges of node added into min_heap
             for neighbour in self.neighbours[current_node]:
                 edge = (neighbour, current_node)
                 heapq.heappush(min_heap, 
@@ -167,6 +169,7 @@ class Undigraph(Graph):
                                     edge) 
                                 )
             
+            # searches for a non-visited node with minimal weight
             while(True):
                 weight, edge = heapq.heappop(min_heap)
                 if (edge[0] in non_visited):
@@ -178,6 +181,7 @@ class Undigraph(Graph):
                     this_edge = edge
                     break
             
+            # saves the progress made
             soma += weight
             output_edges.append(this_edge)
             non_visited.remove(next_node)
@@ -188,9 +192,6 @@ class Undigraph(Graph):
     def get_weight(self, edge):
         if edge in self.edges:
             return self.weights[edge]
-
-        input("AH")
-
         
 
     def draw(self, filename):
