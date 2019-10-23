@@ -111,13 +111,3 @@ class Digraph(Graph):
         return S
         
 
-    # pode ser o prim tb
-    def prim(self):
-        vertices_aux = list(self.vertices)
-        print(self.vertices)
-        type(print(self.vertices))
-        print(vertices_aux)
-        type(print(self.vertices))
-        input("plmdds aperta algo")
-        C = [False for x in vertices_aux]  # visited
-        pass
