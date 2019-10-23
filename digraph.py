@@ -109,12 +109,5 @@ class Digraph(Graph):
                                                        time, S, vertices_aux)
         S.reverse()
         return S
-
-    def 
-
-    def strongly_connected(self):
         
 
-    # pode ser o prim tb
-    def kruskal(self):
-        pass

@@ -1,6 +1,7 @@
 from graphviz import Graph as graph_draw
 from graph import Graph
 from random import randrange
+import heapq
 
 
 class Undigraph(Graph):
@@ -149,6 +150,50 @@ class Undigraph(Graph):
 
         return distance
 
+    def prim(self):
+        non_visited = list(self.vertices)  # keep track of nodes visited
+        current_node = non_visited.pop() # first node, any node works 
+
+        min_heap = [] # stores the minimal weight as first
+                        # min_heap is always used with heapq methods
+        
+        output_edges = [] 
+        soma = 0
+
+        while(len(non_visited) != 0):
+            # input all edges of node added into min_heap
+            for neighbour in self.neighbours[current_node]:
+                edge = (neighbour, current_node)
+                heapq.heappush(min_heap, 
+                                    (self.get_weight(edge),
+                                    edge) 
+                                )
+            
+            # searches for a non-visited node with minimal weight
+            while(True):
+                weight, edge = heapq.heappop(min_heap)
+                if (edge[0] in non_visited):
+                    next_node = edge[0]
+                    this_edge = edge
+                    break
+                if (edge[1] in non_visited):
+                    next_node = edge[1]
+                    this_edge = edge
+                    break
+            
+            # saves the progress made
+            soma += weight
+            output_edges.append(this_edge)
+            non_visited.remove(next_node)
+            current_node = next_node
+
+        return (soma, output_edges)
+
+    def get_weight(self, edge):
+        if edge in self.edges:
+            return self.weights[edge]
+        
+
     def draw(self, filename):
         gr = graph_draw(comment='Undigraph', format='png', strict=True)
         for x in self.edges:
@@ -162,3 +207,5 @@ class Undigraph(Graph):
         for x in aux:
             gr.edge(str(x[0]), str(x[1]))
         gr.view(filename=filename, cleanup='True')
+
+    
