@@ -136,41 +136,36 @@ class Digraph(Graph):
         F = [float('inf') for x in vertices_aux]  # finish time
         A = [None for x in vertices_aux]  # visited
         time = 0
-        print(vertices_aux)
         for v in vertices_aux:
-            print(v)
             if not C[vertices_aux.index(v)]:
                 time = self.dfs_visit(v,C,T,A,F,time, vertices_aux)
-                print("A de "+v+" : "+str(A))
         return (C,T,A,F)
-
+    
     def dfs_adaptad(self, Fl, vertices_aux):
         C = [False for x in vertices_aux]  # visited
         T = [float('inf') for x in vertices_aux]  # visit time
         F = [float('inf') for x in vertices_aux]  # finish time
         A = [None for x in vertices_aux]  # visited
         time = 0
-        Fl.sort(reverse = True)
-        for f in Fl:
+        #Make copy to pick in reverse ordem without lost de index
+        F_aux = Fl.copy()
+        F_aux.sort(reverse = True)
+        for f in F_aux:
             index_aux = Fl.index(f)
             v = vertices_aux[index_aux]
             if not C[index_aux]:
                 time = self.dfs_visit(v,C,T,A,F,time, vertices_aux)
         return (C,T,A,F)
 
-
-    def dfs_visit(self, vertice, C, T, A, F, time, vertices_aux):
-        index = vertices_aux.index(vertice)
+    def dfs_visit(self, v, C, T, A, F, time, vertices_aux):
+        index = vertices_aux.index(v)
         C[index] = True
         time += 1
-        T[index] =time
-        #print("Vertice "+vertice+" "+str(self.get_outneighbours(vertice)))
-        for u in self.get_outneighbours(vertice):
-            index_u = vertices_aux.index(u)
-            #print("INdex de:"+str(index_u))
-            #print("VERTICE:"+u)
-            if not C[index_u]:
-                A[index_u] = vertice
+        T[index] = time
+        for u in self.get_outneighbours(v):
+            idx_u = vertices_aux.index(u)
+            if not C[idx_u]:
+                A[idx_u] = v
                 time = self.dfs_visit(u, C, T, A, F, time, vertices_aux)
         time += 1
         F[index] = time
@@ -178,15 +173,20 @@ class Digraph(Graph):
 
 
     def strongly_connected(self):
+        #print(self.vertices)
         vertices_aux = list(self.vertices)
+        vertices_aux.sort() # Isso porque por algum caso, vertices_aux nao estao em ordem de leitura, por isso, colocamos na ordem correta
+        #Ja que é importante para validação
+        #print(vertices_aux)
         (C, T, A, F) = self.dfs(vertices_aux)
-        print(A)
         At = []
+        Wt = {}
         for (v1,v2) in self.edges:
-            At.append(((v2,v1),self.weights[(v1,v2)]))
+            At.append((v2,v1))
+            Wt[(v2,v1)] = self.weights[(v1,v2)]
         graph_t = Digraph("T_aux")
-        graph_t.set_graph(At, self.vertices, self.vertices_names, self.neighbours, self.weights,
+        graph_t.set_graph(At, self.vertices, self.vertices_names, self.neighbours, Wt,
                             self.degrees, self.outdegrees, self.indegrees, self.inneighbours, self.outneighbours)
+        #graph_t.draw("trans")
         (Ct, Tt, At_aux, Ft) = graph_t.dfs_adaptad(F, vertices_aux)
         return At_aux
-

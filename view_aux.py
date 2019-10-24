@@ -143,7 +143,9 @@ def sel_hierholzer(graph):
 
 def sel_scc(graph):
     a = graph.strongly_connected()
+    print("Answer:\n")
     print(a)
+    print()
 
     input('Press enter to continue...')
 
