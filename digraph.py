@@ -171,7 +171,6 @@ class Digraph(Graph):
         F[index] = time
         return time
 
-
     def strongly_connected(self):
         #print(self.vertices)
         vertices_aux = list(self.vertices)
