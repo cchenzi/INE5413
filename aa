@@ -1,0 +1,12 @@
+// Digraph
+strict digraph {
+	A -> B [label=1.0]
+	A -> D [label=1.0]
+	B -> G [label=1.0]
+	C -> B [label=1.0]
+	C -> E [label=1.0]
+	F -> D [label=1.0]
+	F -> G [label=1.0]
+	G -> H [label=1.0]
+	H -> E [label=1.0]
+}
