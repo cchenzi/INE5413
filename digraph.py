@@ -189,3 +189,39 @@ class Digraph(Graph):
         #graph_t.draw("trans")
         (Ct, Tt, At_aux, Ft) = graph_t.dfs_adaptad(F, vertices_aux)
         return At_aux
+
+    def residual_network(self, flow):
+        # preguiça de fazer
+        # edges_aux = self.edges
+        # Af = []
+        # capacity = {}
+        # for edge in edges_aux:
+        #   v = edge[0]
+        #   u = edge[1]
+        #   Af.append((v, u))
+        #   capacity[(v, u)] = flow[edge]
+        pass
+
+    def edmonds_karp(self, source, target):
+        vertices_aux = list(self.vertices)
+        C = [False for x in vertices_aux]  # visited
+        A = [None for x in vertices_aux]  # visited
+        C[vertices_aux.index(source)] = True
+        Q = []
+        Q.append(source)
+        while Q != []:
+            path = []
+            u = Q.pop()
+            for v in self.get_outneighbours(u):
+                idx_v = vertices_aux.index(v)
+                if (not C[idx_v]) and (self.weights[(u, v)] - flow[(u, v)] > 0):
+                    C[idx_v] = True
+                    A[idx_v] = u
+
+                    # ??
+                    # if v == target:
+                    #   path
+
+
+
+
