@@ -192,7 +192,6 @@ class Undigraph(Graph):
     def get_weight(self, edge):
         if edge in self.edges:
             return self.weights[edge]
-        
 
     def draw(self, filename):
         gr = graph_draw(comment='Undigraph', format='png', strict=True)
@@ -208,4 +207,60 @@ class Undigraph(Graph):
             gr.edge(str(x[0]), str(x[1]))
         gr.view(filename=filename, cleanup='True')
 
-    
+    def bfs_hk(self, mate, D, vertices_aux):
+        Q = []
+
+        for x in self.X:
+            idx_x = vertices_aux.index(x)
+            if not mate[idx_x]:
+                D[idx_x] = 0
+                Q.append(x)
+            else:
+                D[idx_x] = float('inf')
+
+        # verificar esse demonio
+        aux = float('inf')
+        while Q != []:
+            x = Q.pop()
+            idx_x = vertices_aux.index(x)
+            if D[idx_x] < aux:
+                for y in self.neighbours(x):
+                    idx_y = vertices_aux.index(y)
+                    idx_mate_y = vertices_aux.index(mate[idx_y])
+
+                    if D[idx_mate_y] == float('inf'):
+                        D[idx_mate_y] = D[idx_x] + 1
+                        Q.append(mate[idx_y])
+
+        return aux != float('inf')
+
+    def dfs_hk(self, mate, x, D, vertices_aux):
+
+        idx_x = vertices_aux.index(x)
+        if x:
+            for y in self.neighbours(x):
+                idx_y = vertices_aux.index(y)
+                idx_mate_y = vertices_aux.index(mate[idx_y])
+                if D[idx_mate_y] == D[idx_x] + 1:
+                    if self.dfs_hk(mate, mate[idx_y], D, vertices_aux):
+                        mate[idx_y] = x
+                        mate[idx_x] = y
+                        return True
+            D[idx_x] = float('inf')
+            return False
+        return True
+
+    def hopcroft_karp(self):
+        vertices_aux = list(self.vertices)
+        D = [float('inf') for x in vertices_aux]
+        mate = [None for x in vertices_aux]
+        m = 0
+
+        while self.bfs_hk(mate, D, vertices_aux, vertices_aux):
+            for x in self.X:
+                idx_x = vertices_aux.index(x)
+                if not mate[idx_x]:
+                    if self.dfs_hk(mate, x, D, vertices_aux):
+                        m += 1
+
+        return (m, mate)

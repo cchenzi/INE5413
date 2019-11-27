@@ -78,7 +78,7 @@ def menu(graph, isDigraph):
                 print('Insert filename: ')
                 filename = input()
                 graph.draw(filename)
-        if (sel > 5 and sel <= 10):
+        if (sel > 5 and sel <= 11):
             menu_aux(graph, isDigraph, sel)
 
 
@@ -99,6 +99,8 @@ def menu_aux(graph, isDigraph, sel):
             v_x.sel_floyd_warshall(graph)
         if sel == 10:
             v_x.sel_prim(graph)
+        if sel == 11:
+            v_x.sel_edmonds_karp(graph)
 
 
 def menu_digraph(graph):

@@ -163,3 +163,8 @@ def sel_prim(graph):
     print(f"Weighted Sum: {soma}")
     print(", ".join(["{}-{}".format(*edge) for edge in edge_list]))
     input('Press enter to continue...')
+
+
+def sel_edmonds_karp(graph):
+    print("Sorry, we didn't finish it, but there's some code at digraph.py")
+    input("Press enter to continue...")
