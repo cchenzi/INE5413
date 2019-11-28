@@ -1,7 +1,8 @@
-from graphviz import Graph as graph_draw
+# from graphviz import Graph as graph_draw
 from graph import Graph
 from random import randrange
 import heapq
+import copy
 
 
 class Undigraph(Graph):
@@ -19,6 +20,8 @@ class Undigraph(Graph):
         self.neighbours = {}
         self.weights = {}
         self.degrees = {}
+        self.X = set()
+        self.Y = set()
 
     def add_vertice(self, vertice, name):
         if vertice in self.vertices:
@@ -192,7 +195,6 @@ class Undigraph(Graph):
     def get_weight(self, edge):
         if edge in self.edges:
             return self.weights[edge]
-        
 
     def draw(self, filename):
         gr = graph_draw(comment='Undigraph', format='png', strict=True)
@@ -208,4 +210,72 @@ class Undigraph(Graph):
             gr.edge(str(x[0]), str(x[1]))
         gr.view(filename=filename, cleanup='True')
 
-    
+    def bfs_hk(self, mate, D, vertices_aux):
+        Q = []
+        idx_null = vertices_aux.index("-1")
+        for x in self.X:
+            idx_x = vertices_aux.index(x)
+            if mate[idx_x] == "-1":
+                D[idx_x] = 0
+                Q.append(x)
+            else:
+                D[idx_x] = float('inf')
+
+        # verificar esse demonio
+        D[idx_null] = float('inf')
+        while Q != []:
+            x = Q.pop()
+            idx_x = vertices_aux.index(x)
+            if D[idx_x] < D[idx_null]:
+                for y in self.neighbours[x]:
+                    idx_y = vertices_aux.index(y)
+                    idx_mate_y = vertices_aux.index(mate[idx_y])
+
+                    if D[idx_mate_y] == float('inf'):
+                        D[idx_mate_y] = D[idx_x] + 1
+                        Q.append(mate[idx_y])
+
+        return D[idx_null] != float('inf')
+
+    def dfs_hk(self, mate, x, D, vertices_aux):
+        idx_x = vertices_aux.index(x)
+        if x != "-1":
+            for y in self.neighbours[x]:
+                idx_y = vertices_aux.index(y)
+                idx_mate_y = vertices_aux.index(mate[idx_y])
+                if D[idx_mate_y] == D[idx_x] + 1:
+                    if self.dfs_hk(mate, mate[idx_y], D, vertices_aux):
+                        mate[idx_y] = x
+                        mate[idx_x] = y
+                        return True
+            D[idx_x] = float('inf')
+            return False
+        return True
+
+    def hopcroft_karp(self):
+        aux_edges = copy.deepcopy(self.edges)
+        
+        self.add_vertice("-1","-1")
+        for v in self.X:
+            self.add_edges((v,"-1"),0)
+        for v in self.Y:
+            self.add_edges(("-1",v),0)
+        vertices_aux = list(self.vertices)
+        vertices_aux.sort()
+        #print(vertices_aux)
+        D = [float('inf') for x in vertices_aux]
+        mate = ["-1" for x in vertices_aux]
+        m = 0
+
+        while self.bfs_hk(mate, D, vertices_aux):
+            for x in self.X:
+                idx_x = vertices_aux.index(x)
+                if mate[idx_x] == "-1":
+                    if self.dfs_hk(mate, x, D, vertices_aux):
+                        m += 1
+        mate.pop(0)
+        self.vertices.remove('-1')
+        self.edges = aux_edges
+        mr = m - 1
+
+        return (mr, mate)

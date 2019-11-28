@@ -57,7 +57,7 @@ class Graph:
     def add_edges(self, edge, weight):
         pass
 
-    def read_file(self, file_name, isArcs, isDigraph):
+    def read_file(self, file_name, isArcs, isDigraph, isBipartite):
         import re
         file = open(file_name, 'r')
         content = file.readlines()
@@ -74,20 +74,31 @@ class Graph:
         r2 = re.compile('([^\s]+)')
 
         for string in content:
-            if "*vertices" in string:
-                vertices_step = True
-                continue
-            if break_input in string:
-                vertices_step = False
-                edges_step = True
-                continue
-            if vertices_step:
-                aux = r1.search(string)
-                w1 = aux.group(1)
-                w2 = aux.group(2)
-                self.add_vertice(w1, w2)
-            if edges_step:
-                w1 = r2.findall(string)
-                self.add_edges((w1[0], w1[1]), w1[2])
-                if not isDigraph:
-                    self.add_edges((w1[1], w1[0]), w1[2])
+            if not isBipartite:
+                if "*vertices" in string:
+                    vertices_step = True
+                    continue
+                if break_input in string:
+                    vertices_step = False
+                    edges_step = True
+                    continue
+                if vertices_step:
+                    aux = r1.search(string)
+                    w1 = aux.group(1)
+                    w2 = aux.group(2)
+                    self.add_vertice(w1, w2)
+                if edges_step:
+                    w1 = r2.findall(string)
+                    self.add_edges((w1[0], w1[1]), w1[2])
+                    if not isDigraph:
+                        self.add_edges((w1[1], w1[0]), w1[2])
+            else:
+                if string[0:2] == "e ":
+                    w1 = r2.findall(string)                   
+                    self.add_vertice(w1[1],w1[1])
+                    self.add_vertice(w1[2],w1[2])
+                    self.X.add(w1[1])
+                    self.Y.add(w1[2])
+                    self.add_edges((w1[1], w1[2]), 0)
+
+

@@ -25,6 +25,9 @@ def main():
     parser.add_argument("--arcs",
                         help="set file separator as *arcs (default is *edges)",
                         action="store_true")
+    parser.add_argument("--bipartite",
+                        help="set graph as a bipartite graph (it's a undigraph)",
+                        action="store_true")
 
     # read arguments from the command line
     args = parser.parse_args()
@@ -36,7 +39,7 @@ def main():
     else:
         graph = Undigraph(ID)
     print(DATASET)
-    graph.read_file(DATASET, args.arcs, args.digraph)
+    graph.read_file(DATASET, args.arcs, args.digraph, args.bipartite)
     menu(graph, args.digraph)
 
 
@@ -78,7 +81,7 @@ def menu(graph, isDigraph):
                 print('Insert filename: ')
                 filename = input()
                 graph.draw(filename)
-        if (sel > 5 and sel <= 10):
+        if (sel > 5 and sel <= 11):
             menu_aux(graph, isDigraph, sel)
 
 
@@ -88,6 +91,8 @@ def menu_aux(graph, isDigraph, sel):
             v_x.sel_scc(graph)
         if sel == 7:
             v_x.sel_tps(graph)
+        if sel == 8:
+            v_x.sel_edmonds_karp(graph)
     else:
         if sel == 6:
             v_x.sel_bfs(graph)
@@ -99,11 +104,14 @@ def menu_aux(graph, isDigraph, sel):
             v_x.sel_floyd_warshall(graph)
         if sel == 10:
             v_x.sel_prim(graph)
+        if sel == 11:
+            v_x.sel_hk(graph)
 
 
 def menu_digraph(graph):
     print('6: Strongly Connected Components')
     print('7: Topological Sorting')
+    print('8: Edmonds-Karp Algorithm')
     print('0: Exit')
 
 
@@ -113,6 +121,7 @@ def menu_undigraph(graph):
     print('8: Bellman-Ford Algorithm')
     print('9: Floyd-Warshall Algorithm')
     print('10: Prim Algorithm')
+    print('11: Hopcraft-Karp Algorithm')
     print('0: Exit')
 
 
