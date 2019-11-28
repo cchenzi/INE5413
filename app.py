@@ -14,7 +14,9 @@ def main():
             Example: \n\
                 app.py 1 datasets/contem_ciclo.txt\n\
             or\n\
-                app.py 1 datasets/dirigido1.txt --digraph --arcs"
+                app.py 1 datasets/dirigido1.txt --digraph --arcs\n\
+            or\n\
+                app.py 1 datasets/pequeno.txt --bipartite"
     # initiate the parser
     parser = argparse.ArgumentParser(description=text, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("id", help="set graph identification")
